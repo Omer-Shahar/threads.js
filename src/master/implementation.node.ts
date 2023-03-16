@@ -103,7 +103,7 @@ function initWorkerThreadsWorker(): ImplementationExport {
   class Worker extends NativeWorker {
     private mappedEventListeners: WeakMap<EventListener, EventListener>
 
-    constructor(scriptPath: string, options?: ThreadsWorkerOptions & { fromSource: boolean }) {
+    constructor(scriptPath: string | URL, options?: ThreadsWorkerOptions & { fromSource: boolean }) {
       const resolvedScriptPath = options && options.fromSource
         ? null
         : (typeof scriptPath === "string" ? resolveScriptPath(scriptPath, (options || {})._baseURL) : scriptPath.href)
