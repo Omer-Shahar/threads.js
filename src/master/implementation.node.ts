@@ -106,7 +106,7 @@ function initWorkerThreadsWorker(): ImplementationExport {
     constructor(scriptPath: string, options?: ThreadsWorkerOptions & { fromSource: boolean }) {
       const resolvedScriptPath = options && options.fromSource
         ? null
-        : resolveScriptPath(scriptPath, (options || {})._baseURL)
+        : scriptPath.href // resolveScriptPath(scriptPath, (options || {})._baseURL)
 
       if (!resolvedScriptPath) {
         // `options.fromSource` is true
@@ -118,7 +118,7 @@ function initWorkerThreadsWorker(): ImplementationExport {
         // See <https://github.com/andywer/threads-plugin/issues/17>
         super(resolvedScriptPath.replace(/\.asar([\/\\])/, ".asar.unpacked$1"), options)
       } else {
-        super(resolvedScriptPath, options)
+        super(new URL(resolvedScriptPath), options)
       }
 
       this.mappedEventListeners = new WeakMap()
