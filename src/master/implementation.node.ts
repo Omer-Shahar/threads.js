@@ -104,6 +104,7 @@ function initWorkerThreadsWorker(): ImplementationExport {
     private mappedEventListeners: WeakMap<EventListener, EventListener>
 
     constructor(scriptPath: string | URL, options?: ThreadsWorkerOptions & { fromSource: boolean }) {
+      console.log(scriptPath)
       const resolvedScriptPath = options && options.fromSource
         ? null
         : (typeof scriptPath === "string" ? resolveScriptPath(scriptPath, (options || {})._baseURL) : scriptPath.href)
@@ -118,6 +119,7 @@ function initWorkerThreadsWorker(): ImplementationExport {
         // See <https://github.com/andywer/threads-plugin/issues/17>
         super(resolvedScriptPath.replace(/\.asar([\/\\])/, ".asar.unpacked$1"), options)
       } else {
+        console.log(new URL(resolvedScriptPath))
         super(new URL(resolvedScriptPath), options)
       }
 
